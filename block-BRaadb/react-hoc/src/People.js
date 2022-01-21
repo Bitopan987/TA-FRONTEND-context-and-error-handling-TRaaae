@@ -1,39 +1,28 @@
 import React from 'react';
 
 import people from './data/got.json';
+import withSearch from './withSearch';
 
-class People extends React.Component {
-  state = {
-    searchTerm: '',
-  };
-  handleChange = ({ target: { value } }) => {
-    this.setState({ searchTerm: value });
-  };
-  render() {
-    let allPeople = people.reduce((acc, cv) => {
-      acc = acc.concat(cv.people);
-      return acc;
-    }, []);
+function People(props) {
+  const { searchTerm } = props;
 
-    let filteredPeople = allPeople.filter((person) =>
-      person.name.toLowerCase().includes(this.state.searchTerm)
-    );
-    return (
-      <>
-        <input
-          placeholder="Search"
-          className="search"
-          value={this.state.searchTerm}
-          onChange={this.handleChange}
-        />
-        <ul className="people">
-          {filteredPeople.map((sp) => (
-            <SinglePerson {...sp} />
-          ))}
-        </ul>
-      </>
-    );
-  }
+  let allPeople = people.reduce((acc, cv) => {
+    acc = acc.concat(cv.people);
+    return acc;
+  }, []);
+
+  let filteredPeople = allPeople.filter((person) =>
+    person.name.toLowerCase().includes(searchTerm)
+  );
+  return (
+    <>
+      <ul className="people">
+        {filteredPeople.map((sp) => (
+          <SinglePerson {...sp} />
+        ))}
+      </ul>
+    </>
+  );
 }
 
 function SinglePerson(props) {
@@ -49,4 +38,4 @@ function SinglePerson(props) {
   );
 }
 
-export default People;
+export default withSearch(People);
