@@ -1,33 +1,22 @@
 import React from 'react';
 import books from './data/books.json';
+import withSearch from './withSearch';
 
-class Books extends React.Component {
-  state = {
-    searchTerm: '',
-  };
-  handleChange = ({ target: { value } }) => {
-    this.setState({ searchTerm: value });
-  };
-  render() {
-    let filteredBooks = books.filter((article) =>
-      article.title.toLowerCase().includes(this.state.searchTerm)
-    );
-    return (
-      <div className="page">
-        <input
-          placeholder="Search"
-          className="search"
-          value={this.state.searchTerm}
-          onChange={this.handleChange}
-        />
-        <ul className="archive">
-          {filteredBooks.map((book) => (
-            <Book {...book} />
-          ))}
-        </ul>
-      </div>
-    );
-  }
+function Books(props) {
+  let { searchTerm } = props;
+
+  let filteredBooks = books.filter((article) =>
+    article.title.toLowerCase().includes(searchTerm)
+  );
+  return (
+    <div className="page">
+      <ul className="archive">
+        {filteredBooks.map((book) => (
+          <Book {...book} />
+        ))}
+      </ul>
+    </div>
+  );
 }
 
 function Book(props) {
@@ -45,4 +34,4 @@ function Book(props) {
   );
 }
 
-export default Books;
+export default withSearch(Books);
