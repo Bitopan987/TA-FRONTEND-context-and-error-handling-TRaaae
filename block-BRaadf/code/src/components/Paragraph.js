@@ -1,6 +1,11 @@
-function Paragraph({ isDarkMode }) {
+import { useContext } from 'react';
+import { ModeContext } from './ModeContext';
+
+function Paragraph() {
+  const mode = useContext(ModeContext);
+  let isDarkMode = mode.data.isDarkMode;
   return (
-    <p className={`para ${isDarkMode ? "para-dark" : "para-light"}`}>
+    <p className={`para ${isDarkMode ? 'para-dark' : 'para-light'}`}>
       Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
       tempor incididunt ut labore et dolore magna aliqua. Sed tempus urna et
       pharetra pharetra massa massa ultricies. Id porta nibh venenatis cras sed
